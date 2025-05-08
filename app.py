@@ -452,6 +452,3 @@ def format_datetime(value):
     if isinstance(value, datetime):
         return value.strftime('%Y-%m-%d %H:%M:%S')  # Adjust the format as needed
     return value
-
-if __name__ == '__main__':
-    app.run(debug=True)
