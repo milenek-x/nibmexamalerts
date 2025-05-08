@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <!-- User Info -->
+        <h2>Current Registered Email: {{ user.email }}</h2>
+
+        <!-- Email Update Form -->
+        <div class="card mb-4">
+            <div class="card-header">Update Email</div>
+            <div class="card-body">
+                <form method="POST" action="/update_email">
+                    <input type="hidden" name="old_email" value="{{ user.email }}">
+                    <div class="form-group">
+                        <label>New Email</label>
+                        <input type="email" name="new_email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Update Email</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Current Exams -->
+        <div class="card mb-4">
+            <div class="card-header">Registered Exams</div>
+            <div class="card-body">
+                {% if current_matches %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for exam in current_matches %}
+                        <tr>
+                            <td>{{ exam.code }}</td>
+                            <td>{{ exam.name }}</td>
+                            <td>{{ exam.date }}</td>
+                            <td>{{ exam.time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No matching exams currently scheduled</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Update Exams Form -->
+        <div class="card mb-4">
+            <div class="card-header">Update Exam Preferences</div>
+            <div class="card-body">
+                <form method="POST" action="/update_exams">
+                    <input type="hidden" name="email" value="{{ user.email }}">
+                    <div id="examFields">
+                        {% for exam in user.exams %}
+                        <div class="exam-group row mb-3">
+                            <div class="col">
+                                <input type="text" name="code_part[]" value="{{ exam.code.split('/')[0] }}"
+                                    class="form-control" placeholder="Code part" required>
+                            </div>
+                            <div class="col">
+                                <select name="branch[]" class="form-control" required>
+                                    {% for br in branches %}
+                                    <option value="{{ br }}" {% if br==exam.code.split('/')[1] %}selected{% endif %}>
+                                        {{ br }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="exam_name[]" value="{{ exam.name }}" class="form-control"
+                                    placeholder="Exam name" required>
+                            </div>
+                            <div class="col-auto">
+                                <form method="POST" action="{{ url_for('remove_exam') }}">
+                                    <input type="hidden" name="exam_code" value="{{ exam.code }}">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addExamField()">Add Another</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addExamField() {
+            const newField = `
+                <div class="exam-group row mb-3">
+                    <div class="col">
+                        <input type="text" name="code_part[]" class="form-control" placeholder="Code part">
+                    </div>
+                    <div class="col">
+                        <select name="branch[]" class="form-control">
+                            {% for br in branches %}
+                            <option value="{{ br }}">{{ br }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="text" name="exam_name[]" class="form-control" placeholder="Exam name">
+                    </div>
+                </div>`;
+            document.getElementById('examFields').insertAdjacentHTML('beforeend', newField);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NIBM Exam Alerts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 520px;
+            margin: 80px auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 40px 38px 32px 38px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.1em;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.08em;
+            margin-bottom: 30px;
+            color: #444;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 13px 32px;
+            background: linear-gradient(90deg, #5a9dfc 0%, #3b7ddd 100%);
+            color: #fff;
+            border-radius: 7px;
+            font-size: 1.1em;
+            font-weight: 500;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        a.button:hover {
+            background: linear-gradient(90deg, #3b7ddd 0%, #5a9dfc 100%);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #888;
+            font-size: 0.97em;
+        }
+
+        @media (max-width: 480px) {
+            .wrapper {
+                padding: 18px 8px 14px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1>NIBM Exam Alerts</h1>
+        <p>
+            Register your email and get notified automatically when your desired exams are scheduled.<br>
+            Stay updated, never miss an exam!
+        </p>
+        <a href="/register" class="button">Register Now</a>
+        <div class="footer">
+            &copy; {{ year or 2025 }} NIBM Exam Alerts
+        </div>
+    </div>
+</body>
+
+</html>

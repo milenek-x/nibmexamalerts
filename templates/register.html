@@ -1,0 +1,100 @@
+<!-- templates/register.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Alert Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">NIBM Exam Alert Registration</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+
+            <div id="exam-entries">
+                <div class="form-group row">
+                    <div class="col">
+                        <input type="text" name="code_part[]" class="form-control"
+                            placeholder="Exam code (e.g., DSE25.1F)" required>
+                    </div>
+                    <div class="col">
+                        <select name="branch[]" class="form-control" required>
+                            <option value="">Select Branch</option>
+                            {% for branch in branches %}
+                            <option value="{{ branch }}">{{ branch }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="text" name="exam_name[]" class="form-control" placeholder="Exam Name" required>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary mb-3" onclick="addExamField()">Add Another Exam</button>
+                <button type="submit" class="btn btn-primary mb-3">Register</button>
+            </div>
+
+
+            <div class="text-right mt-3">
+                <a href="{{ url_for('login') }}" class="btn btn-link">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function addExamField() {
+            const entry = document.createElement('div');
+            entry.className = 'form-group row';
+            entry.innerHTML = `
+                <div class="col">
+                    <input type="text" name="code_part[]" class="form-control" placeholder="Exam code" required>
+                </div>
+                <div class="col">
+                    <select name="branch[]" class="form-control" required>
+                        <option value="">Select Branch</option>
+                        {% for branch in branches %}
+                        <option value="{{ branch }}">{{ branch }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text" name="exam_name[]" class="form-control" placeholder="Exam Name" required>
+                </div>`;
+            document.getElementById('exam-entries').appendChild(entry);
+        }
+    </script>
+</body>
+
+</html>

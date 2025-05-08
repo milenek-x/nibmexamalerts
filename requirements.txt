@@ -1,0 +1,7 @@
+Flask
+Flask-Mail
+Flask-SQLAlchemy
+APScheduler
+requests
+beautifulsoup4
+firebase-admin
