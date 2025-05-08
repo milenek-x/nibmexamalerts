@@ -4,6 +4,22 @@
         {
             "src": "app.py",
             "use": "@vercel/python"
+        },
+        {
+            "src": "templates/index.html",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "templates/register.html",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "templates/profile.html",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "templates/login.html",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
